@@ -1,6 +1,10 @@
 h1 {
     text-align: center;
 }
+
+#gameControl{
+    text-align: center;
+}
 table {
     margin: 20px auto;
 }
@@ -18,4 +22,9 @@ table {
 td {
     width: 150px;
     height: 150px;
+    text-align: center;
+}
+
+.play{
+
 }
