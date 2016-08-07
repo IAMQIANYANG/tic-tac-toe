@@ -48,7 +48,9 @@ var Gameplay = function(){
   };
 
   self.setPlayerMove = function(id){
-    self.board[id] = self.playerMark;
+    if (self.isSpaceFree(self.board, id)){
+      self.board[id] = self.playerMark;
+    }
   };
 
 

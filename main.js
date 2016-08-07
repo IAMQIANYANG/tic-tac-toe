@@ -3,6 +3,7 @@
  */
 
 // this file uses scripts from gameplay.js
+
 var currentPlayerMark = '';
 var currentGameBoard = [
   document.querySelector('#topLeft'),
@@ -40,25 +41,29 @@ var play = function(gameplay){
   }
   currentGameBoard.forEach(function (boardPosition) {
     boardPosition.addEventListener('click', function () {
-      this.textContent = gameplay.playerMark;
+      boardPosition.textContent = gameplay.playerMark;
       var playerMove = currentGameBoard.indexOf(this);
       gameplay.setPlayerMove(playerMove);
       if (gameplay.isWining(gameplay.board)) {
         gameInfoArea.innerHTML = '<p>You won!';
         startAgain(gameplay);
+        updateResult('player');
       } else if (gameplay.isBoardFull()) {
         gameInfoArea.innerHTML = "<p>It's a tie!";
         startAgain(gameplay);
+        updateResult('tie');
       } else {
         var computerMove = gameplay.getComputerMove();
         currentGameBoard[computerMove].textContent = gameplay.computerMark;
         gameplay.setComputerMove(computerMove);
         if (gameplay.isWining(gameplay.board)) {
-          gameInfoArea.innerHTML = 'You lost!';
+          gameInfoArea.innerHTML = '<p>You lost!</p>';
           startAgain(gameplay);
+          updateResult('computer');
         } else if(gameplay.isBoardFull()) {
           gameInfoArea.innerHTML = "<p>It's a tie!";
           startAgain(gameplay);
+          updateResult('tie');
         }
       }
     })
@@ -77,6 +82,30 @@ var clearBoard = function(){
   })
 };
 
+var updateResult = function(result){
+  if(result === 'computer'){
+    let score = Number(localStorage.getItem('computer')) + 1;
+    localStorage.setItem('computer', score);
+    document.querySelector('#computerWin').innerHTML = ': ' + score;
+  } else if (result === 'player'){
+    let score = Number(localStorage.getItem('player')) + 1;
+    localStorage.setItem('player', score);
+    document.querySelector('#playerWin').innerHTML = ': ' + score;
+  } else {
+    let score = Number(localStorage.getItem('tie')) + 1;
+    localStorage.setItem('tie', score);
+    document.querySelector('#tie').innerHTML = ': ' + score;
+  }
+
+};
+
+var showResults = function(){
+  document.querySelector('#computerWin').innerHTML = ': ' + localStorage.getItem('computer');
+  document.querySelector('#playerWin').innerHTML = ': ' + localStorage.getItem('player');
+  document.querySelector('#tie').innerHTML = ': ' + localStorage.getItem('tie');
+};
+
 var startButton = document.querySelector('#start');
 startButton.onclick = startGame;
+showResults();
 
