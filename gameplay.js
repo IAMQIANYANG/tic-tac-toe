@@ -40,22 +40,16 @@ var Gameplay = function(){
       return 'No';
     }
   };
-
-  self.setComputerMove = function(id) {
-    if (id !== 'No'){
-      self.board[id] = self.computerMark;
-    }
+  
+  self.setMove = function(id){
+    self.board[id] = self.computerMark;
   };
 
   self.setPlayerMove = function(id){
-    if (self.isSpaceFree(self.board, id)){
-      self.board[id] = self.playerMark;
-    }
+    self.board[id] = self.playerMark;
   };
-
-
-  //set computer's move
-  self.getComputerMove = function () {
+  
+  self.getAndSetComputerMove = function () {
 
     //1. check if computer can win in the next move;
     for (var i = 0; i < 9; i++) {
@@ -63,6 +57,7 @@ var Gameplay = function(){
       if (self.isSpaceFree(copyBoard, i)) {
         copyBoard[i] = self.computerMark;
         if (self.isWining(copyBoard)) {
+          self.setMove(i);
           return i
         }
       }
@@ -75,6 +70,7 @@ var Gameplay = function(){
       if (self.isSpaceFree(copyBoard2, j)) {
         copyBoard2[j] = self.playerMark;
         if (self.isWining(copyBoard2)) {
+          self.setMove(j);
           return j
         }
       }
@@ -83,16 +79,22 @@ var Gameplay = function(){
     //3. put on one of the corners, if free
     var position = self.chooseRandomPosition([0, 2, 6, 8]);
     if (position !== 'No') {
+      self.setMove(position);
       return position
     }
 
     //4. put on center, if free
     if (self.isSpaceFree(self.board, 4)) {
+      self.setMove(4);
       return 4;
     }
 
     //5. put on one of the sides, if free
-    return self.chooseRandomPosition([1, 3, 5, 7]);
+    var newPosition = self.chooseAndAssignMark([1, 3, 5, 7]);
+    if(newPosition !== 'No'){
+      self.setMove(newPosition);
+      return newPosition
+    }
 
     };
 

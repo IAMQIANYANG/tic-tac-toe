@@ -3,7 +3,7 @@
  */
 
 // this file uses scripts from gameplay.js
-
+  
 var currentPlayerMark = '';
 var currentGameBoard = [
   document.querySelector('#topLeft'),
@@ -34,36 +34,46 @@ var startGame = function(){
 
 
 var play = function(gameplay){
+  var computerCanPlay = false;
+  var playerCanPlay = true;
   if (gameplay.playerMark === 'O'){
-    var firstMove = gameplay.getComputerMove();
+    var firstMove = gameplay.getAndSetComputerMove();
     currentGameBoard[firstMove].textContent = gameplay.computerMark;
-    gameplay.setComputerMove(firstMove);
   }
-  currentGameBoard.forEach(function (boardPosition) {
+  
+  currentGameBoard.forEach(function (boardPosition, positionIndex) {
     boardPosition.addEventListener('click', function () {
-      boardPosition.textContent = gameplay.playerMark;
-      var playerMove = currentGameBoard.indexOf(this);
-      gameplay.setPlayerMove(playerMove);
+      if(gameplay.isSpaceFree(gameplay.board, positionIndex) && playerCanPlay){
+        boardPosition.textContent = gameplay.playerMark;
+        var playerMove = currentGameBoard.indexOf(this);
+        gameplay.setPlayerMove(playerMove);
+        computerCanPlay = true;
+        playerCanPlay = false;
+      }
       if (gameplay.isWining(gameplay.board)) {
         gameInfoArea.innerHTML = '<p>You won!';
-        startAgain(gameplay);
-        updateResult('player');
+        // startAgain(gameplay);
+        // updateResult('player');
       } else if (gameplay.isBoardFull()) {
         gameInfoArea.innerHTML = "<p>It's a tie!";
         startAgain(gameplay);
         updateResult('tie');
+
       } else {
-        var computerMove = gameplay.getComputerMove();
-        currentGameBoard[computerMove].textContent = gameplay.computerMark;
-        gameplay.setComputerMove(computerMove);
-        if (gameplay.isWining(gameplay.board)) {
-          gameInfoArea.innerHTML = '<p>You lost!</p>';
-          startAgain(gameplay);
-          updateResult('computer');
-        } else if(gameplay.isBoardFull()) {
-          gameInfoArea.innerHTML = "<p>It's a tie!";
-          startAgain(gameplay);
-          updateResult('tie');
+        if (computerCanPlay) {
+          var computerMove = gameplay.getAndSetComputerMove();
+          currentGameBoard[computerMove].textContent = gameplay.computerMark;
+          computerCanPlay = false;
+          playerCanPlay = true;
+          if (gameplay.isWining(gameplay.board)) {
+            gameInfoArea.innerHTML = '<p>You lost!</p>';
+            startAgain(gameplay);
+            updateResult('computer');
+          } else if(gameplay.isBoardFull()) {
+            gameInfoArea.innerHTML = "<p>It's a tie!";
+            startAgain(gameplay);
+            updateResult('tie');
+          }
         }
       }
     })
