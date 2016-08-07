@@ -11,29 +11,31 @@
 </head>
 <body>
 <h1> Tic Tac Toe</h1>
-<div id="gameControl"><button>X</button>
-    <button>O</button>
-    <button>start</button>
+<div id="gameControl">
+    <input type="radio" name="choice" id="X" value="X">X
+    <input type="radio" name="choice" id="O" value="O">O
+    <button id="start">start</button>
 </div>
     <table>
         <tr>
-            <td><h1>o</h1></td>
-            <td class="vertical"></td>
-            <td></td>
+            <td id="topLeft"><h1></h1></td>
+            <td id="topMiddle" class="vertical"></td>
+            <td id="topRight"></td>
         </tr>
 
         <tr>
-            <td class="horizontal"></td>
-            <td class="vertical horizontal"></td>
-            <td class="horizontal"></td>
+            <td id="left" class="horizontal"></td>
+            <td id="middle" class="vertical horizontal"></td>
+            <td id="right" class="horizontal"></td>
         </tr>
 
         <tr>
-            <td></td>
-            <td class="vertical"></td>
-            <td></td>
+            <td id="bottomLeft"></td>
+            <td id="bottomMiddle" class="vertical"></td>
+            <td id="bottomRight"></td>
         </tr>
     </table>
 <script src="gameplay.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
