@@ -9,6 +9,7 @@ var Gameplay = function(){
   self.playerMark = '';
   self.computerMark ='';
 
+  //update marks for player and computer
   self.chooseAndAssignMark =  function(mark){
      self.playerMark = mark;
     if (mark === 'O'){
@@ -18,6 +19,7 @@ var Gameplay = function(){
     }
    };
 
+  //make a copy of current board
   self.copyCurrentBoard = function() {
     var boardCopy = [];
     self.board.forEach(function(mark){
@@ -26,6 +28,7 @@ var Gameplay = function(){
     return boardCopy;
   };
 
+  //choose a random position from available positions
   self.chooseRandomPosition = function(list){
     var availableMoves = [];
     list.forEach(function(e){
@@ -98,6 +101,7 @@ var Gameplay = function(){
 
     };
 
+  //check if a space is free on the board
   self.isSpaceFree = function(board, id){
     return board[id] === '';
   };

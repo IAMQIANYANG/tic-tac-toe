@@ -3,8 +3,10 @@
  */
 
 // this file uses scripts from gameplay.js
-  
+
 var currentPlayerMark = '';
+
+//select all board positions;
 var currentGameBoard = [
   document.querySelector('#topLeft'),
   document.querySelector('#topMiddle'),
@@ -17,30 +19,42 @@ var currentGameBoard = [
   document.querySelector('#bottomRight')
 ];
 
+
 var gameInfoArea = document.querySelector('#gameControl');
 
 var startGame = function(){
   if (document.querySelector('#X').checked === true) {
     currentPlayerMark = document.querySelector('#X').value;
-    gameInfoArea.innerHTML = '<p>You start!';
+    gameInfoArea.innerHTML = '<p class="info">You start!</p>';
   } else if(document.querySelector('#O').checked === true) {
     currentPlayerMark = document.querySelector('#O').value;
-    gameInfoArea.innerHTML = '<p>Computer start!';
+    gameInfoArea.innerHTML = '<p class="info">Computer start!</p>';
   }
   var newGame = Gameplay();
   newGame.chooseAndAssignMark(currentPlayerMark);
   play(newGame);
 };
 
+//add the two variables to allow only one player each turn
+var computerCanPlay = false;
+var playerCanPlay = true;
 
-var play = function(gameplay){
-  var computerCanPlay = false;
-  var playerCanPlay = true;
+//if player chooses 'O', computer makes first move;
+var computerMakeFirstMove = function(gameplay){
   if (gameplay.playerMark === 'O'){
     var firstMove = gameplay.getAndSetComputerMove();
     currentGameBoard[firstMove].textContent = gameplay.computerMark;
   }
-  
+};
+
+//control the flow of the game;
+var play = function(gameplay){
+
+  computerMakeFirstMove(gameplay);
+
+  //add event listeners to each position on the board;
+  //if a position is free, play can take that position
+  //after player made a valid move, computer can start to play
   currentGameBoard.forEach(function (boardPosition, positionIndex) {
     boardPosition.addEventListener('click', function () {
       if(gameplay.isSpaceFree(gameplay.board, positionIndex) && playerCanPlay){
@@ -50,12 +64,16 @@ var play = function(gameplay){
         computerCanPlay = true;
         playerCanPlay = false;
       }
+      
+      //after play's each move, check if player wins or if it's a tie
+      //if not, computer can play
+      //after computer played, allow player to play
       if (gameplay.isWining(gameplay.board)) {
-        gameInfoArea.innerHTML = '<p>You won!';
-        // startAgain(gameplay);
-        // updateResult('player');
+        gameInfoArea.innerHTML = '<p class="win">You won!</p>';
+        startAgain(gameplay);
+        updateResult('player');
       } else if (gameplay.isBoardFull()) {
-        gameInfoArea.innerHTML = "<p>It's a tie!";
+        gameInfoArea.innerHTML = "<p class='info'>It's a tie!</p>";
         startAgain(gameplay);
         updateResult('tie');
 
@@ -65,12 +83,14 @@ var play = function(gameplay){
           currentGameBoard[computerMove].textContent = gameplay.computerMark;
           computerCanPlay = false;
           playerCanPlay = true;
+          
+          // after computer's each move, check if computer wins of if it's a tie
           if (gameplay.isWining(gameplay.board)) {
-            gameInfoArea.innerHTML = '<p>You lost!</p>';
+            gameInfoArea.innerHTML = '<p class="loss">You lost!</p>';
             startAgain(gameplay);
             updateResult('computer');
           } else if(gameplay.isBoardFull()) {
-            gameInfoArea.innerHTML = "<p>It's a tie!";
+            gameInfoArea.innerHTML = "<p class='info'>It's a tie!</p>";
             startAgain(gameplay);
             updateResult('tie');
           }
@@ -80,9 +100,13 @@ var play = function(gameplay){
   })
 };
 
+
 var startAgain = function(gameplay){
+  computerCanPlay = false;
+  playerCanPlay = true;
   clearBoard();
   gameplay.reset();
+  computerMakeFirstMove(gameplay);
 };
 
 

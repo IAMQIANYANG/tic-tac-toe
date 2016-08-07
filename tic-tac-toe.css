@@ -1,11 +1,46 @@
+body{
+    font-family: 'Indie Flower', cursive;
+}
 
 h1 {
     text-align: center;
+    margin-bottom:0;
+    font-size: 40px;
+}
+
+button{
+    padding: 5px 10px;
+    color: #ffffff;
+    font-size: 20px;
+    background-color: #F2784B;
+    border-style:none;
 }
 
 #gameControl{
+    padding-top: 0;
     text-align: center;
+    font-size: 30px;
+    color: #F2784B;
+
 }
+
+#gameControl p{
+    margin-top:0;
+    padding-top: 0;
+}
+
+.info{
+    color: #F2784B;
+}
+
+.win{
+    color: #1BBC9B;
+}
+
+.loss{
+    color: #D91E18;
+}
+
 table {
     margin: 20px auto;
 }
@@ -24,6 +59,7 @@ td {
     width: 110px;
     height: 110px;
     text-align: center;
+    font-size: 40px;
 }
 
 .play{
