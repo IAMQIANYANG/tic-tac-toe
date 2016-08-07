@@ -134,9 +134,21 @@ var updateResult = function(result){
 };
 
 var showResults = function(){
-  document.querySelector('#computerWin').innerHTML = ': ' + localStorage.getItem('computer');
-  document.querySelector('#playerWin').innerHTML = ': ' + localStorage.getItem('player');
-  document.querySelector('#tie').innerHTML = ': ' + localStorage.getItem('tie');
+  if(localStorage.getItem('computer') !== null){
+    document.querySelector('#computerWin').innerHTML = ': ' + localStorage.getItem('computer');
+  } else{
+    document.querySelector('#computerWin').innerHTML = ': ' + '0';
+  }
+  if(localStorage.getItem('player') !== null){
+    document.querySelector('#playerWin').innerHTML = ': ' + localStorage.getItem('player');
+  } else{
+    document.querySelector('#playerWin').innerHTML = ': ' + '0';
+  }
+  if(localStorage.getItem('tie') !== null){
+    document.querySelector('#tie').innerHTML = ': ' + localStorage.getItem('tie');
+  } else {
+    document.querySelector('#tie').innerHTML = ': ' + '0';
+  }
 };
 
 var startButton = document.querySelector('#start');
