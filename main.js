@@ -23,11 +23,11 @@ var currentGameBoard = [
 var gameInfoArea = document.querySelector('#gameControl');
 
 var startGame = function(){
-  if (document.querySelector('#X').checked === true) {
-    currentPlayerMark = document.querySelector('#X').value;
+  if (this.id === 'X') {
+    currentPlayerMark = 'X';
     gameInfoArea.innerHTML = '<p class="info">You start!</p>';
-  } else if(document.querySelector('#O').checked === true) {
-    currentPlayerMark = document.querySelector('#O').value;
+  } else if(this.id === 'O') {
+    currentPlayerMark = 'O';
     gameInfoArea.innerHTML = '<p class="info">Computer start!</p>';
   }
   var newGame = Gameplay();
@@ -69,11 +69,11 @@ var play = function(gameplay){
       //if not, computer can play
       //after computer played, allow player to play
       if (gameplay.isWining(gameplay.board)) {
-        gameInfoArea.innerHTML = '<p class="win">You won!</p>';
+        gameInfoArea.innerHTML = '<p class="win">You won! :)</p>';
         startAgain(gameplay);
         updateResult('player');
       } else if (gameplay.isBoardFull()) {
-        gameInfoArea.innerHTML = "<p class='info'>It's a tie!</p>";
+        gameInfoArea.innerHTML = "<p class='info'>It's a tie! :)</p>";
         startAgain(gameplay);
         updateResult('tie');
 
@@ -86,11 +86,11 @@ var play = function(gameplay){
           
           // after computer's each move, check if computer wins of if it's a tie
           if (gameplay.isWining(gameplay.board)) {
-            gameInfoArea.innerHTML = '<p class="loss">You lost!</p>';
+            gameInfoArea.innerHTML = '<p class="loss">You lost! :(</p>';
             startAgain(gameplay);
             updateResult('computer');
           } else if(gameplay.isBoardFull()) {
-            gameInfoArea.innerHTML = "<p class='info'>It's a tie!</p>";
+            gameInfoArea.innerHTML = "<p class='info'>It's a tie! :)</p>";
             startAgain(gameplay);
             updateResult('tie');
           }
@@ -151,7 +151,9 @@ var showResults = function(){
   }
 };
 
-var startButton = document.querySelector('#start');
-startButton.onclick = startGame;
+var chooseX = document.querySelector('#X');
+var chooseO = document.querySelector('#O');
+chooseX.onclick = startGame;
+chooseO.onclick = startGame;
 showResults();
 
