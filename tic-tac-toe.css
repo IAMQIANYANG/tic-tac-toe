@@ -1,6 +1,6 @@
 body{
     font-family: 'Indie Flower', cursive;
-    background: #E4F1FE;
+    background: #ffffff;
 }
 
 h1 {
@@ -12,7 +12,7 @@ h1 {
 button{
     padding: 0;
     color: #000000;
-    background-color: #E4F1FE;
+    background-color: #ffffff;
     border-style:none;
     font-size:40px;
     margin-left:20px;
