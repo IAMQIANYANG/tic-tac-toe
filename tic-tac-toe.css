@@ -1,5 +1,6 @@
 body{
     font-family: 'Indie Flower', cursive;
+    background: #E4F1FE;
 }
 
 h1 {
@@ -9,14 +10,17 @@ h1 {
 }
 
 button{
-    padding: 5px 10px;
-    color: #ffffff;
-    font-size: 20px;
-    background-color: #F2784B;
+    padding: 0;
+    color: #000000;
+    background-color: #E4F1FE;
     border-style:none;
-    width:50px;
+    font-size:40px;
     margin-left:20px;
+    font-family: 'Indie Flower', cursive;
+    width: 100px;
+    outline:0;
 }
+
 
 
 #gameControl{
